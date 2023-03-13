@@ -11,8 +11,13 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-  body {
+  /* body {
     background: green;
+  } */
+
+  #__next {
+    height: 100vh;
+    overflow: auto;
   }
 
 `

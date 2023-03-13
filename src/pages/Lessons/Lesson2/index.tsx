@@ -1,6 +1,15 @@
-export const App = () => {
+import { Page } from 'src/pages/_App/interfaces'
+
+export const Lesson2Page: Page = () => {
   return (
-    <div className="box">
+    <div
+      className="box"
+      style={{
+        height: '100%',
+        overflow: 'auto',
+        background: 'green',
+      }}
+    >
       {' '}
       <h1
         style={{
