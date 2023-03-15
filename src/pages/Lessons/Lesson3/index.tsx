@@ -1,5 +1,5 @@
 import { NextSeo } from 'next-seo'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { Page } from 'src/pages/_App/interfaces'
 
 export const Lesson3Page: Page = () => {
@@ -10,21 +10,34 @@ export const Lesson3Page: Page = () => {
 
   const [count, countSetter] = useState(0)
 
-  const onClick = useCallback(() => {
-    countSetter((c) => c + 1)
-  }, [])
+  const onClick = useCallback(
+    () => {
+      countSetter((c) => c + 1)
+    },
+    /**
+     * DependencyList - определяет список зависимостей.
+     * Если хоть одна зависимость изменилась, будет возвращено новое значение (первый аргумент)
+     */
+    []
+  )
 
   console.log('render')
 
+  /**
+   * Здесь у нас не определен список зависимостей,
+   * а значит этот хук будет срабатывать при каждом ререндеринге.
+   */
   useEffect(() => {
     console.log('useEffect 1')
   })
 
+  const countFoo = useMemo(() => (count % 2 === 0 ? count : count + 1), [count])
+
   useEffect(() => {
-    console.log('useEffect mounted', count)
+    console.log('useEffect mounted', countFoo)
     mountedSetter(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [countFoo])
 
   console.log('mounted', mounted)
 
@@ -61,7 +74,7 @@ export const Lesson3Page: Page = () => {
 
     /**
      * Вызываем перед повторным выполнением хука,
-     * чтобы удалить ранее навешенные события
+     * чтобы удалить ранее навешенные
      */
     return () => {
       input3.removeEventListener('input', onInput)
@@ -89,6 +102,10 @@ export const Lesson3Page: Page = () => {
     }
   }, [])
 
+  /**
+   * Если компонент еще не смонтирован в DOM,
+   * то возвращаем пустой контент
+   */
   if (!mounted) {
     return null
   }
