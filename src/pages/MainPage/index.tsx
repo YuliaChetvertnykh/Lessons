@@ -1,4 +1,5 @@
 import { NextSeo } from 'next-seo'
+import Lesson4Page from 'pages/lessons/lesson4'
 
 import { Page } from '../_App/interfaces'
 
@@ -7,7 +8,7 @@ export const MainPage: Page = () => {
     <>
       <NextSeo title="Main page" description="Main page description" />
 
-      <div>Main Page</div>
+      <Lesson4Page />
     </>
   )
 }

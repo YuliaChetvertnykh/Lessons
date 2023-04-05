@@ -6,7 +6,8 @@ export const Lesson3Page: Page = () => {
   const [mounted, mountedSetter] = useState(false)
 
   const [x, xSetter] = useState(5)
-  const [y, ySetter] = useState(20)
+  // const [y, ySetter] = useState(20)
+  const yState = useState(20)
 
   const [count, countSetter] = useState(0)
 
@@ -82,25 +83,28 @@ export const Lesson3Page: Page = () => {
     }
   }, [input3])
 
-  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    console.log(
-      'input onChange',
-      event,
-      event.currentTarget.name,
-      event.currentTarget.value
-    )
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      console.log(
+        'input onChange',
+        event,
+        event.currentTarget.name,
+        event.currentTarget.value
+      )
 
-    const value = parseFloat(event.currentTarget.value)
+      const value = parseFloat(event.currentTarget.value)
 
-    switch (event.currentTarget.name) {
-      case 'x':
-        xSetter(value)
-        break
-      case 'y':
-        ySetter(value)
-        break
-    }
-  }, [])
+      switch (event.currentTarget.name) {
+        case 'x':
+          xSetter(value)
+          break
+        case 'y':
+          yState[1](value)
+          break
+      }
+    },
+    [yState]
+  )
 
   /**
    * Если компонент еще не смонтирован в DOM,
@@ -120,7 +124,8 @@ export const Lesson3Page: Page = () => {
         </div>
 
         <div>
-          Y: <input type="number" name="y" value={y} onChange={onChange} />
+          Y:{' '}
+          <input type="number" name="y" value={yState[0]} onChange={onChange} />
         </div>
 
         <div>
